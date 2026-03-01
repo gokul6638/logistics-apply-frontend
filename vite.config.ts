@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/gokul6638/logistics-apply-frontend/", // repo name for GitHub Pages
+  base: "/logistics-apply-frontend/", // repo name for GitHub Pages
   server: {
     proxy: {
       "/api": {
