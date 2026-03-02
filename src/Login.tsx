@@ -56,7 +56,7 @@ export default function Login({ onLogin }: Props) {
     <div className="authPage">
       <div className="authCard">
         <div className="authHeader">
-          <img className="authLogo" src="/logo.png" alt="LogistiApply AI Pro" />
+          <img src="/logistics-apply-frontend/logo.png" alt="Logo" />
           <h1 className="authTitle">Logistics Apply AI Pro</h1>
           <p className="authSub">Sign in to access your job dashboard</p>
         </div>
