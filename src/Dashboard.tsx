@@ -30,6 +30,8 @@ interface Props {
   onLogout: () => void;
 }
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL as string) || "/api";
+
 function authHeaders(token: string) {
   return { Authorization: `Bearer ${token}` };
 }
@@ -139,7 +141,7 @@ export default function Dashboard({ token, onLogout }: Props) {
   }, [jobs, tab, search, locationMode, locationText, postedWithin]);
 
   async function loadSettings() {
-    const res = await fetch("/api/settings", { headers: { ...authHeaders(token) } });
+    const res = await fetch(`${API_BASE}/settings`, { headers: { ...authHeaders(token) } });
     if (!res.ok) throw new Error(await res.text());
     const data = (await res.json()) as Settings;
     setSettings(data);
@@ -149,7 +151,7 @@ export default function Dashboard({ token, onLogout }: Props) {
   }
 
   async function saveSettings(next: Settings) {
-    const res = await fetch("/api/settings", {
+    const res = await fetch(`${API_BASE}/settings`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", ...authHeaders(token) },
       body: JSON.stringify(next),
@@ -168,9 +170,9 @@ export default function Dashboard({ token, onLogout }: Props) {
         params.set("posted_within", postedWithin);
       }
       const qs = params.toString();
-      const url = qs ? `/api/jobs?${qs}` : "/api/jobs";
-
+      const url = qs ? `${API_BASE}/jobs?${qs}` : `${API_BASE}/jobs`;
       const res = await fetch(url, { headers: { ...authHeaders(token) } });
+
       if (!res.ok) throw new Error(await res.text());
       const data = (await res.json()) as Job[];
       setJobs(Array.isArray(data) ? data : []);
@@ -185,7 +187,7 @@ export default function Dashboard({ token, onLogout }: Props) {
     setFetching(true);
     setError("");
     try {
-      const res = await fetch("/api/fetch-jobs", {
+      const res = await fetch(`${API_BASE}/fetch-jobs`, {
         method: "POST",
         headers: { ...authHeaders(token) },
       });
@@ -199,7 +201,7 @@ export default function Dashboard({ token, onLogout }: Props) {
   }
 
   async function toggleSave(job: Job) {
-    const res = await fetch(`/api/jobs/${encodeURIComponent(job.id)}/save`, {
+    const res = await fetch(`${API_BASE}/jobs/${encodeURIComponent(job.id)}/save`, {
       method: "POST",
       headers: { ...authHeaders(token) },
     });
@@ -208,7 +210,7 @@ export default function Dashboard({ token, onLogout }: Props) {
   }
 
   async function markApplied(jobId: string) {
-    const res = await fetch(`/api/jobs/${encodeURIComponent(jobId)}/applied`, {
+    const res = await fetch(`${API_BASE}/jobs/${encodeURIComponent(jobId)}/applied`, {
       method: "POST",
       headers: { ...authHeaders(token) },
     });
