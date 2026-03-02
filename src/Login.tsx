@@ -56,9 +56,9 @@ export default function Login({ onLogin }: Props) {
     <div className="authPage">
       <div className="authCard">
         <div className="authHeader">
-          <img src="/logistics-apply-frontend/logo.png" alt="Logo" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Logo" />
           <h1 className="authTitle">Logistics Apply AI Pro</h1>
-          <p className="authSub">Sign in to access your job dashboard</p>
+          <p className="authSub">Sign in to access the dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="authForm" autoComplete="off">
